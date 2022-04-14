@@ -16,6 +16,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using CompleteExample.Logic.Service;
+using CompleteExample.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompleteExample.API
 {
@@ -33,6 +35,9 @@ namespace CompleteExample.API
         {
             services.AddControllers();
 
+            services.AddDbContext<CompleteExampleDBContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("SchoolContext")));
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Complete Example API", Version = "v1" });
